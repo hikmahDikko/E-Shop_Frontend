@@ -1,4 +1,5 @@
 //Base
+@import '~normalize.css/normalize.css';
 @import '../styles/base/colors.scss';
 @import '../styles/base/fonts.scss';
 @import '../styles/base/mixins.scss';
@@ -13,3 +14,6 @@
 //Libs
 @import '../styles/libs/ui/banner.scss';
 @import '../styles/libs/ui/slider.scss';
+
+//Shared
+@import './apps/admin/shared.scss';
