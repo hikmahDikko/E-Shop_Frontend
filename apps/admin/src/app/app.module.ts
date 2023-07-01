@@ -5,25 +5,38 @@ import { AppComponent } from './app.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ShellComponent } from './shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { CardModule } from 'primeng/card';
+import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
 
-const routes : Routes = [
+const routes: Routes = [
   {
-    path : '',
+    path: '',
     component: ShellComponent,
-    children : [
+    children: [
       {
-        path : 'dashboard',
-        component : DashboardComponent
-      }
-    ]
-  }
-]
+        path: 'dashboard',
+        component: DashboardComponent,
+      },
+      {
+        path: 'categories',
+        component: CategoriesListComponent,
+      },
+    ],
+  },
+];
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, ShellComponent, SidebarComponent],
+  declarations: [
+    AppComponent,
+    DashboardComponent,
+    ShellComponent,
+    SidebarComponent,
+    CategoriesListComponent,
+  ],
   imports: [
     BrowserModule,
     RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
+    CardModule
   ],
   providers: [],
   bootstrap: [AppComponent],
