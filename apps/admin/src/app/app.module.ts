@@ -7,6 +7,12 @@ import { ShellComponent } from './shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { CardModule } from 'primeng/card';
 import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ButtonModule } from 'primeng/button';
+import { TableModule } from 'primeng/table';
+import { HttpClientModule } from '@angular/common/http';
+import { CategoriesService } from '@hikmah-tech/products';
+import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
 
 const routes: Routes = [
   {
@@ -32,13 +38,18 @@ const routes: Routes = [
     ShellComponent,
     SidebarComponent,
     CategoriesListComponent,
+    CategoriesFormComponent,
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
-    CardModule
+    CardModule,
+    ToolbarModule,
+    ButtonModule,
+    TableModule,
   ],
-  providers: [],
+  providers: [CategoriesService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
