@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -14,6 +15,9 @@ import { TableModule } from 'primeng/table';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoriesService } from '@hikmah-tech/products';
 import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 
 const routes: Routes = [
   {
@@ -47,15 +51,19 @@ const routes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(routes, { initialNavigation: 'enabledBlocking' }),
     CardModule,
     ToolbarModule,
     ButtonModule,
     TableModule,
-    InputTextModule
+    InputTextModule,
+    ToastModule
   ],
-  providers: [CategoriesService],
+  providers: [CategoriesService, MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
