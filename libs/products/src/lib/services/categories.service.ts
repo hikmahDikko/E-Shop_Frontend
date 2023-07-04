@@ -9,9 +9,13 @@ import { Category } from '../model/category';
 export class CategoriesService {
 
   constructor(private http : HttpClient) { }
-
+  
   getCategories() : Observable<Category[]> {
     return this.http.get<Category[]>('http://localhost:3000/api/v1/categories');
+  }
+
+  getCategory(categoryId : string) : Observable<Category> {
+    return this.http.get<Category>('http://localhost:3000/api/v1/categories/'+categoryId);
   }
 
   createCategory(category : Category) : Observable<Category> {
@@ -21,4 +25,9 @@ export class CategoriesService {
   deleteCategory(categoryId : string) : Observable<Category> {
     return this.http.delete<Category>('http://localhost:3000/api/v1/categories/'+categoryId);
   }
+
+  updateCategory(categoryId : string, category : Category) : Observable<Category> {
+    return this.http.put<Category>('http://localhost:3000/api/v1/categories/'+categoryId, category);
+  }
+
 }

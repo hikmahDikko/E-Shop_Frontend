@@ -10,6 +10,7 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
 import { ToolbarModule } from 'primeng/toolbar';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { HttpClientModule } from '@angular/common/http';
@@ -17,7 +18,7 @@ import { CategoriesService } from '@hikmah-tech/products';
 import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 const routes: Routes = [
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
       },
       {
         path: 'categories/form',
+        component: CategoriesFormComponent,
+      },
+      {
+        path: 'categories/form/:id',
         component: CategoriesFormComponent,
       },
     ],
@@ -61,9 +66,10 @@ const routes: Routes = [
     ButtonModule,
     TableModule,
     InputTextModule,
-    ToastModule
+    ToastModule,
+    ConfirmDialogModule
   ],
-  providers: [CategoriesService, MessageService],
+  providers: [CategoriesService, MessageService, ConfirmationService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

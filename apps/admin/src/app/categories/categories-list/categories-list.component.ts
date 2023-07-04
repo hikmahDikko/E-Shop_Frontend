@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CategoriesService, Category } from '@hikmah-tech/products';
-import { MessageService } from 'primeng/api';
+import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'admin-categories-list',
@@ -8,7 +9,12 @@ import { MessageService } from 'primeng/api';
 })
 export class CategoriesListComponent implements OnInit {
   categories : Category[] = [];
-  constructor(private categoryService : CategoriesService, private messageService : MessageService){}
+
+  constructor(
+    private categoryService : CategoriesService, 
+    private messageService : MessageService,
+    private confirmationService: ConfirmationService,
+    private router : Router){}
   
   ngOnInit(): void {
     this._getCategories()
@@ -21,11 +27,33 @@ export class CategoriesListComponent implements OnInit {
   }
 
   deleteCategory(categoryId : string) {
-    this.categoryService.deleteCategory(categoryId).subscribe(response => {
-      this._getCategories();
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Category is deleted Successfully' });
-    },error => {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Category cannot be deleted' });
-    })
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this category',
+      header: 'Delete Category',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.categoryService.deleteCategory(categoryId).subscribe(response => {
+        },error => {
+          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Category cannot be deleted' });
+        });
+        
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Category is deleted Successfully' });
+        this._getCategories();
+      },
+      reject: (type: ConfirmEventType) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({ severity: 'error', summary: 'Rejected', detail: 'You have rejected' });
+            break;
+            case ConfirmEventType.CANCEL:
+              this.messageService.add({ severity: 'warn', summary: 'Cancelled', detail: 'You have cancelled' });
+              break;
+            }
+          }
+      }); 
+  }
+
+  updateCategory(categoryId : string) {
+   this.router.navigateByUrl(`categories/form/${categoryId}`)
   }
 }

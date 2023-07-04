@@ -40,6 +40,7 @@
                                 styleClass="p-button-danger mr-3"
                                 ></p-button>
                                 <p-button 
+                                (click)="updateCategory(category.id)"
                                 icon="pi pi-pencil"
                                 styleClass="p-button-success"
                                 ></p-button>
@@ -51,3 +52,4 @@
         </div>
     </p-card>
 </div>
+<p-confirmDialog [style]="{width: '50vw'}"></p-confirmDialog>

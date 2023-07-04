@@ -1,6 +1,7 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { CategoriesService, Category } from '@hikmah-tech/products';
 import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
@@ -12,12 +13,14 @@ import { timer } from 'rxjs';
 export class CategoriesFormComponent implements OnInit {
   form!: FormGroup;
   isSubmitted : boolean = false;
+  editMode = false;
 
   constructor (
     private formBuilder : FormBuilder,
     private categoriesService : CategoriesService,
     private messageService: MessageService,
-    private location : Location
+    private location : Location,
+    private activatedRoute : ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -25,6 +28,8 @@ export class CategoriesFormComponent implements OnInit {
       name: ['', Validators.required],
       icon: ['', Validators.required],
     });
+
+    this._checkEditMode();
   }
 
   onSubmit(){
@@ -46,6 +51,25 @@ export class CategoriesFormComponent implements OnInit {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Category is not created' });
     });
 
+  }
+
+  onCancel(){
+    this.location.back();
+  }
+
+  private _checkEditMode(){
+    this.activatedRoute.params.subscribe(params => {
+      if(params['id']){
+        this.editMode = true;
+        
+        this.categoriesService.getCategory(params['id']).subscribe(categories => {
+          //@ts-ignore
+          this.categoryForm['name'].setValue(categories.data.name);
+          //@ts-ignore
+          this.categoryForm['icon'].setValue(categories.data.icon);
+        })
+      }
+    })
   }
 
   get categoryForm() {
