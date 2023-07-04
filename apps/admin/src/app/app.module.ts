@@ -6,6 +6,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ShellComponent } from './shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { CardModule } from 'primeng/card';
+import { InputTextModule } from 'primeng/inputtext';
 import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
@@ -26,6 +27,10 @@ const routes: Routes = [
       {
         path: 'categories',
         component: CategoriesListComponent,
+      },
+      {
+        path: 'categories/form',
+        component: CategoriesFormComponent,
       },
     ],
   },
@@ -48,6 +53,7 @@ const routes: Routes = [
     ToolbarModule,
     ButtonModule,
     TableModule,
+    InputTextModule
   ],
   providers: [CategoriesService],
   bootstrap: [AppComponent],
