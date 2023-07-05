@@ -14,6 +14,7 @@ export class CategoriesFormComponent implements OnInit {
   form!: FormGroup;
   isSubmitted : boolean = false;
   editMode = false;
+  currentCategoryId : string = "";
 
   constructor (
     private formBuilder : FormBuilder,
@@ -27,6 +28,7 @@ export class CategoriesFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
       icon: ['', Validators.required],
+      color: ['', Validators.required],
     });
 
     this._checkEditMode();
@@ -40,16 +42,14 @@ export class CategoriesFormComponent implements OnInit {
     const category : Category = {
       name: this.categoryForm['name'].value,
       icon: this.categoryForm['icon'].value,
-      id: ''
+      id: this.currentCategoryId,
+      color : this.categoryForm['color'].value
     };
-    this.categoriesService.createCategory(category).subscribe(response => {
-      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Category is created Successfully' });
-      timer(2000).toPromise().then(done => {
-        this.location.back();
-      });
-    }, error => {
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Category is not created' });
-    });
+    if(this.editMode){
+      this._updateCategory(category.id, category);
+    }else {
+      this._addCategory(category);
+    }
 
   }
 
@@ -61,15 +61,39 @@ export class CategoriesFormComponent implements OnInit {
     this.activatedRoute.params.subscribe(params => {
       if(params['id']){
         this.editMode = true;
-        
+        this.currentCategoryId = params['id'];
         this.categoriesService.getCategory(params['id']).subscribe(categories => {
           //@ts-ignore
           this.categoryForm['name'].setValue(categories.data.name);
           //@ts-ignore
           this.categoryForm['icon'].setValue(categories.data.icon);
+          //@ts-ignore
+          this.categoryForm['color'].setValue(categories.data.color);
         })
       }
     })
+  }
+
+  private _addCategory(category : Category){
+    this.categoriesService.createCategory(category).subscribe(response => {
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Category is created Successfully' });
+      timer(2000).toPromise().then(done => {
+        this.location.back();
+      });
+    }, error => {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Category is not created' });
+    });
+  }
+
+  private _updateCategory(categoryId: string, category : Category){
+    this.categoriesService.updateCategory(categoryId, category).subscribe(response => {
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Category is updated Successfully' });
+      timer(2000).toPromise().then(done => {
+        this.location.back();
+      });
+    }, error => {
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Category is not updated' });
+    });
   }
 
   get categoryForm() {

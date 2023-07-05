@@ -27,14 +27,18 @@
                 <form [formGroup]="form">
                     <div class="formgrid grid">
                         <div class="field col">
-                            <label for="name">Name</label>
-                            <input id="name" formControlName="name" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-green-500 w-full">
+                            <label for="name">Name</label><br>
+                            <input id="name" formControlName="name" type="text" class="p-inputtext-lg" pInputText>
                             <small *ngIf="form.controls['name'].invalid && isSubmitted" class="p-error">Name is required</small>
                         </div>
                         <div class="field col">
-                            <label for="icon">Icon</label>
-                            <input id="icon" type="text" formControlName="icon" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-green-500 w-full">
+                            <label for="icon">Icon</label><br>
+                            <input id="icon" type="text" formControlName="icon" class="p-inputtext-lg" pInputText>
                             <small *ngIf="form.controls['icon'].invalid && isSubmitted" class="p-error">Icon is required</small>
+                        </div>
+                        <div class="field col">
+                            <label for="color">Color Picker</label><br>
+                            <p-colorPicker formControlName="color"></p-colorPicker>
                         </div>
                     </div>
                 </form>

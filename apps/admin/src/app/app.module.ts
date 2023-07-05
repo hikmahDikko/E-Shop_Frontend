@@ -8,14 +8,15 @@ import { ShellComponent } from './shell/shell.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
-import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
+import { CategoriesListComponent } from './pages/categories/categories-list/categories-list.component';
 import { ToolbarModule } from 'primeng/toolbar';
+import { ColorPickerModule } from 'primeng/colorpicker';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoriesService } from '@hikmah-tech/products';
-import { CategoriesFormComponent } from './categories/categories-form/categories-form.component';
+import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -67,7 +68,8 @@ const routes: Routes = [
     TableModule,
     InputTextModule,
     ToastModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    ColorPickerModule
   ],
   providers: [CategoriesService, MessageService, ConfirmationService],
   bootstrap: [AppComponent],

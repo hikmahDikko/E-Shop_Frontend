@@ -18,7 +18,8 @@
       "@hikmah-tech/orders": ["libs/orders/src/index.ts"],
       "@hikmah-tech/products": ["libs/products/src/index.ts"],
       "@hikmah-tech/ui": ["libs/ui/src/index.ts"],
-      "@hikmah-tech/user": ["libs/user/src/index.ts"]
+      "@hikmah-tech/user": ["libs/user/src/index.ts"],
+      "@env/*": ["environments/*"]
     }
   },
   "exclude": ["node_modules", "tmp"]

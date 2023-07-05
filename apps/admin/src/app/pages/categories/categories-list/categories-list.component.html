@@ -22,17 +22,22 @@
                     styleClass="p-datatable-gridlines">
                     <ng-template pTemplate="header">
                         <tr>
-                            <th>id</th>
                             <th>Name</th>
                             <th>Icon</th>
-                            <th></th>
+                            <th>Color Picker</th>
                         </tr>
                     </ng-template>
                     <ng-template pTemplate="body" let-category>
                         <tr>
-                            <td>{{ category.id }}</td>
                             <td>{{ category.name }}</td>
-                            <td>{{ category.icon }}</td>
+                            <td><i class="pi" [ngClass]="'pi-' + category.icon"></i></td>
+                            <td><i
+                                class="pi pi-circle-on"
+                                style="font-size: 2rem"
+                                [ngStyle]="{ color: category.color }"
+                              ></i>
+                            </td>
+                            <td></td>
                             <td>
                                 <p-button 
                                 (click)="deleteCategory(category.id)"
