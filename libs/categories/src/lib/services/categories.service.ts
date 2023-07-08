@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
-import { Category } from '../model/category';
+import { Category } from '../models/categories';
 import {  Environment } from '@env/environment'
 
 const apiUrl = Environment.apiUrl;

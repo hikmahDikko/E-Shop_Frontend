@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoriesService, Category } from '@hikmah-tech/products';
+import { CategoriesService, Category } from '@hikmah-tech/categories';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({

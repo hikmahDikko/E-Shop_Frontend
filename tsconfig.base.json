@@ -15,11 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@env/*": ["environments/*"],
+      "@hikmah-tech/categories": ["libs/categories/src/index.ts"],
       "@hikmah-tech/orders": ["libs/orders/src/index.ts"],
       "@hikmah-tech/products": ["libs/products/src/index.ts"],
       "@hikmah-tech/ui": ["libs/ui/src/index.ts"],
-      "@hikmah-tech/user": ["libs/user/src/index.ts"],
-      "@env/*": ["environments/*"]
+      "@hikmah-tech/user": ["libs/user/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

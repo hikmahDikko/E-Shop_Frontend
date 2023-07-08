@@ -2,7 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CategoriesService, Category } from '@hikmah-tech/products';
+import { CategoriesService, Category } from '@hikmah-tech/categories';
 import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
 
