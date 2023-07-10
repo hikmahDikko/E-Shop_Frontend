@@ -29,29 +29,29 @@
                         <div class="field col">
                             <label for="name">Name</label><br>
                             <input id="name" formControlName="name" type="text" class="p-inputtext-lg" pInputText><br>
-                            <small *ngIf="form.controls['name'].invalid && isSubmitted" class="p-error">Name is required</small>
+                            <small *ngIf="productForm['name'].invalid && isSubmitted" class="p-error">Name is required</small>
                         </div>
                         <div class="field col">
                             <label for="brand">Brand</label><br>
                             <input id="brand" type="text" formControlName="brand" class="p-inputtext-lg" pInputText><br>
-                            <small *ngIf="form.controls['brand'].invalid && isSubmitted" class="p-error">Brand is required</small>
+                            <small *ngIf="productForm['brand'].invalid && isSubmitted" class="p-error">Brand is required</small>
                         </div>
                         <div class="field col">
                             <label for="price">Price</label><br>
                              <p-inputNumber formControlName="price" mode="decimal" inputId="price" [useGrouping]="false"> </p-inputNumber><br>
-                            <small *ngIf="form.controls['price'].invalid && isSubmitted" class="p-error">Price is required</small>
+                            <small *ngIf="productForm['price'].invalid && isSubmitted" class="p-error">Price is required</small>
                         </div>
                     </div>
                     <div class="p-fluid formgrid grid">
                         <div class="field col-4">
                             <label for="countInStock">Count in Stock</label><br>
                             <p-inputNumber formControlName="countInStock" mode="decimal" inputId="countInStock" [useGrouping]="false"> </p-inputNumber><br>
-                            <small *ngIf="form.controls['countInStock'].invalid && isSubmitted" class="p-error">Count in Stock is required</small>
+                            <small *ngIf="productForm['countInStock'].invalid && isSubmitted" class="p-error">Count in Stock is required</small>
                         </div>
                         <div class="field col-4">
                             <label for="category">Category</label><br>
                             <p-dropdown [options]="categories" formControlName="category" optionValue="id" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Select a Category"></p-dropdown>
-                            <small *ngIf="form.controls['category'].invalid && isSubmitted" class="p-error">Category is required</small>
+                            <small *ngIf="productForm['category'].invalid && isSubmitted" class="p-error">Category is required</small>
                         </div>
                         <div class="field col-4">
                             <label for="isFeatured">Is Featured</label><br>
@@ -61,7 +61,7 @@
                     <div class="field p-col-12">
                         <label for="description">Description</label><br>
                         <textarea [rows]="7" [cols]="140" pInputTextarea formControlName="description"></textarea>
-                        <small *ngIf="form.controls['description'].invalid && isSubmitted" class="p-error">Description is required</small>
+                        <small *ngIf="productForm['description'].invalid && isSubmitted" class="p-error">Description is required</small>
                     </div>
                     <div class="field p-col-12">
                         <label for="richDescription">Product Detail</label><br>
@@ -70,7 +70,7 @@
                     <div class="field p-col-12">
                         <label for="image">Main Image</label><br>
                         <input type="file" class="p-inputtext" id="image" name="image" accept="image/*" (change)="onImageUpload($event)"/><br>
-                        <small *ngIf="form.controls['image'].invalid && isSubmitted" class="p-error">Image is required</small>
+                        <small *ngIf="productForm['image'].invalid && isSubmitted" class="p-error">Image is required</small>
                         <div class="col-2 mt-2 pl-0">
                             <img [src]="imageDisplay" style="width: 100%;" alt=""/>
                         </div>

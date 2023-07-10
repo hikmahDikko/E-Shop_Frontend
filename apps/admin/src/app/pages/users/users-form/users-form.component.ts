@@ -5,6 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { User, UsersService } from '@hikmah-tech/users';
 import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
+import * as CountryList from 'i18n-iso-countries'
+
+//@ts-ignore
+declare const require;
 
 @Component({
   selector: 'admin-users-form',
@@ -16,7 +20,7 @@ export class UsersFormComponent {
   isSubmitted : boolean = false;
   editMode = false;
   currentUserId : string = "";
-  countries =[];
+  countries = [];
 
   constructor (
     private formBuilder : FormBuilder,
@@ -29,8 +33,8 @@ export class UsersFormComponent {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
-      email : ['', Validators.required],
-      password : ['', Validators.required],
+      email : ['', [Validators.required, Validators.email]],
+      password : [''],
       street : [''],
       apartment : [''],
       city : [''],
@@ -41,6 +45,7 @@ export class UsersFormComponent {
     });
 
     this._checkEditMode();
+    this._getCountries();
   }
 
   onSubmit(){
@@ -97,6 +102,8 @@ export class UsersFormComponent {
           this.userForm['street'].setValue(users.data.street);
           //@ts-ignore
           this.userForm['isAdmin'].setValue(users.data.isAdmin);
+          this.userForm['password'].setValidators([]);
+          this.userForm['password'].updateValueAndValidity();
         })
       }
     })
@@ -121,6 +128,17 @@ export class UsersFormComponent {
       });
     }, error => {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'User is not updated' });
+    });
+  }
+
+  private _getCountries() {
+    CountryList.registerLocale(require("i18n-iso-countries/langs/en.json"));
+    //@ts-ignore
+    this.countries = Object.entries(CountryList.getNames("en", {select: "official"})).map(country => {
+      return {
+        id : country[0],
+        name : country[1]
+      }
     });
   }
 

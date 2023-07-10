@@ -29,17 +29,24 @@
                         <div class="field col">
                             <label for="name">Name</label><br>
                             <input id="name" formControlName="name" type="text" class="p-inputtext-lg" pInputText><br>
-                            <small *ngIf="form.controls['name'].invalid && isSubmitted" class="p-error">Name is required</small>
+                            <small *ngIf="userForm['name'].invalid && isSubmitted" class="p-error">Name is required</small>
                         </div>
                         <div class="field col">
                             <label for="password">E-mail</label><br>
                             <input id="password" type="text" formControlName="email" class="p-inputtext-lg" pInputText><br>
-                            <small *ngIf="form.controls['email'].invalid && isSubmitted" class="p-error">E-mail is required</small>
+                            <small *ngIf="userForm['email'].invalid && isSubmitted" class="p-error">
+                                <span>E-mail is required</span>
+                                <!-- <span *ngIf="userForm['email'].errors['email']">E-mail is invalid</span> -->
+                            </small>
                         </div>
                         <div class="field col">
                             <label for="password">Password</label><br>
                             <input id="password" type="text" formControlName="password" class="p-inputtext-lg" pInputText><br>
-                            <small *ngIf="form.controls['password'].invalid && isSubmitted" class="p-error">Password is required</small>
+                            <small *ngIf="userForm['password'].invalid && isSubmitted" class="p-error">Password is required</small>
+                        </div>
+                        <div class="field col">
+                            <label for="zip">Zip</label><br>
+                            <input id="zip" type="text" formControlName="zip" class="p-inputtext-lg" pInputText>
                         </div>
                         <div class="field col">
                             <label for="country">Country</label><br>
@@ -53,12 +60,7 @@
                                 [showClear]="true"
                                 placeholder="Select a Country"
                             >
-
                             </p-dropdown>
-                        </div>
-                        <div class="field col">
-                            <label for="zip">Zip</label><br>
-                            <input id="zip" type="text" formControlName="zip" class="p-inputtext-lg" pInputText>
                         </div>
                         <div class="field col">
                             <label for="street">Street</label><br>
@@ -71,7 +73,8 @@
                         <div class="field col">
                             <label for="phone">Phone</label><br>
                             <input id="phone" type="text" formControlName="phone" class="p-inputtext-lg" pInputText><br>
-                            <small *ngIf="form.controls['phone'].invalid && isSubmitted" class="p-error">Phone is required</small>
+                            <!-- <p-inputMask id="phone" mask="(999) 999-9999" FormControlName="phone" placeholder="(999) 999-9999"></p-inputMask><br> -->
+                            <small *ngIf="userForm['phone'].invalid && isSubmitted" class="p-error">Phone is required</small>
                         </div>
                         <div class="field col-4">
                             <label for="isFeatured">Is Admin</label><br>

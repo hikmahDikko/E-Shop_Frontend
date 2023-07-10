@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {UsersService, User } from '@hikmah-tech/users';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
 
+
 @Component({
   selector: 'admin-users-list',
   templateUrl: './users-list.component.html',
@@ -52,6 +53,10 @@ export class UsersListComponent {
             }
           }
       }); 
+  }
+  getCountryName(countryKey: string) {
+    if (countryKey) return this.usersService.getCountry(countryKey);
+    return;
   }
 
   updateUser(userId : string) {

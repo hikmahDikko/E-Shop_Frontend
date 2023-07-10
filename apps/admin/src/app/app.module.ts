@@ -24,6 +24,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CategoriesService } from '@hikmah-tech/categories';
 import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InputMaskModule } from 'primeng/inputmask';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ProductsListComponent } from './pages/products/products-list/products-list.component';
@@ -91,7 +92,7 @@ const routes: Routes = [
     ProductsListComponent,
     ProductsFormComponent,
     UsersListComponent,
-    UsersFormComponent,
+    UsersFormComponent
   ],
   imports: [
     BrowserModule,
@@ -114,6 +115,7 @@ const routes: Routes = [
     DropdownModule,
     EditorModule,
     TagModule,
+    InputMaskModule
   ],
   providers: [CategoriesService, MessageService, ConfirmationService],
   bootstrap: [AppComponent],
