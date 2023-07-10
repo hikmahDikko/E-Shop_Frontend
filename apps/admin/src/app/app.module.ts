@@ -19,6 +19,7 @@ import { TableModule } from 'primeng/table';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
 import { EditorModule } from 'primeng/editor';
+import { TagModule } from 'primeng/tag';
 import { HttpClientModule } from '@angular/common/http';
 import { CategoriesService } from '@hikmah-tech/categories';
 import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
@@ -112,6 +113,7 @@ const routes: Routes = [
     InputSwitchModule,
     DropdownModule,
     EditorModule,
+    TagModule,
   ],
   providers: [CategoriesService, MessageService, ConfirmationService],
   bootstrap: [AppComponent],

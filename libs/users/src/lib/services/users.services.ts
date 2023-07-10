@@ -21,7 +21,7 @@ export class UsersService {
     return this.http.get<User>(apiUrl + 'users/'+userId);
   }
 
-  createUser(user : FormData) : Observable<User> {
+  createUser(user : User) : Observable<User> {
     return this.http.post<User>(apiUrl + 'users/create', user);
   }
 
@@ -29,7 +29,7 @@ export class UsersService {
     return this.http.delete<User>(apiUrl + 'users/'+userId);
   }
 
-  updateUser(userId : string, user : FormData) : Observable<User> {
+  updateUser(userId : string, user : User) : Observable<User> {
     return this.http.put<User>(apiUrl + 'users/'+userId, user);
   }
 

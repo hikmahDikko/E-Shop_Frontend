@@ -18,10 +18,10 @@ export class UsersListComponent {
     private router : Router){}
   
   ngOnInit(): void {
-    this._getusers()
+    this._getUsers()
   }
 
-  private _getusers() {
+  private _getUsers() {
     this.usersService.getUsers().subscribe((users: User[])  => {
       this.users = users;
     })
@@ -34,12 +34,12 @@ export class UsersListComponent {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.usersService.deleteUser(userId).subscribe(() => {
-        },() => {
+          this._getUsers();
+        },(error) => {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'User cannot be deleted' });
         });
-        
         this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User is deleted Successfully' });
-        this._getusers();
+        this._getUsers();
       },
       reject: (type: ConfirmEventType) => {
         switch (type) {

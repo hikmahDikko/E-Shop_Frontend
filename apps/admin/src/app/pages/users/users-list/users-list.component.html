@@ -35,7 +35,10 @@
                         <tr>
                             <td>{{ user.name }}</td>
                             <td>{{ user.email }}</td>
-                            <td>{{ user.isAdmin }}</td>
+                            <td>
+                                <p-tag *ngIf="user.isAdmin" [rounded]="true" icon="pi pi-check" severity="success"></p-tag>
+                                <p-tag *ngIf="!user.isAdmin" [rounded]="true" icon="pi pi-times" severity="danger"></p-tag>
+                            </td>
                             <td>{{ user.country }}</td>
                             <td>
                                 <p-button 
