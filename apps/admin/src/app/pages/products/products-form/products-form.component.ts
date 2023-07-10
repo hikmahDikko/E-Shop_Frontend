@@ -15,10 +15,11 @@ import { CategoriesService, Category } from '@hikmah-tech/categories';
 })
 export class ProductsFormComponent {
   categories : Category[] = [];
-  form!: FormGroup;
+  form!: FormGroup ;
   isSubmitted : boolean = false;
   editMode = false;
   currentProductId : string = "";
+  imageDisplay! : string | ArrayBuffer;
 
   constructor (
     private formBuilder : FormBuilder,
@@ -40,23 +41,16 @@ export class ProductsFormComponent {
     if(this.form.invalid){
       return;
     }
-    const product : Product = {
-      id: this.currentProductId,
-      name: this.productForm['name'].value,
-      description : this.productForm['description'].value,
-      richDescription : this.productForm['richDescription'].value,
-      image : this.productForm['image'].value,
-      brand: this.productForm['brand'].value,
-      price : this.productForm['price'].value,
-      category : this.productForm['category'].value,
-      countInStock : this.productForm['countInStock'].value,
-      isFeatured : this.productForm['isFeatured'].value,
-      dateCreated : this.productForm['created'].value,
-    };
+    const productformData = new FormData();
+    
+    Object.keys(this.productForm).map(key => {
+      productformData.append(key, this.productForm[key].value);
+    });
+    
     if(this.editMode){
-      this._updateProduct(product.id, product);
+      this._updateProduct(this.currentProductId, productformData);
     }else {
-      this._addProduct(product);
+      this._addProduct(productformData);
     }
 
   }
@@ -70,12 +64,12 @@ export class ProductsFormComponent {
       name: ['', Validators.required],
       description : ['', Validators.required],
       richDescription : [''],
-      image : [''],
+      image : ['', Validators.required],
       brand: ['', Validators.required],
       price : [0, Validators.required],
       category : ['', Validators.required],
       countInStock : [0, Validators.required],
-      isFeatured : ['', Validators.required],
+      isFeatured : [false],
     });
   }
 
@@ -84,38 +78,27 @@ export class ProductsFormComponent {
       if(params['id']){
         this.editMode = true;
         this.currentProductId = params['id'];
-        this.productsService.getProduct(params['id']).subscribe(products => {
+        this.productsService.getProduct(params['id']).subscribe(product => { 
+          this.productForm['name'].setValue(product.name);
           //@ts-ignore
-          this.productForm['name'].setValue(products.data.name);
+          this.imageDisplay = product.image;
+          this.productForm['description'].setValue(product.description);
+          this.productForm['richDescription'].setValue(product.richDescription);
+          this.productForm['brand'].setValue(product.brand);
+          this.productForm['price'].setValue(product.price);
           //@ts-ignore
-          this.productForm['image'].setValue(products.data.image);
-          //@ts-ignore
-          this.productForm['images'].setValue(products.data.images);
-          //@ts-ignore
-          this.productForm['description'].setValue(products.data.description);
-          //@ts-ignore
-          this.productForm['richDescription'].setValue(products.data.richDescription);
-          //@ts-ignore
-          this.productForm['brand'].setValue(products.data.brand);
-          //@ts-ignore
-          this.productForm['price'].setValue(products.data.price);
-          //@ts-ignore
-          this.productForm['category'].setValue(products.data.category);
-          //@ts-ignore
-          this.productForm['countInStock'].setValue(products.data.countInStock);
-          //@ts-ignore
-          this.productForm['numReviews'].setValue(products.data.numReviews);
-          //@ts-ignore
-          this.productForm['isFeatured'].setValue(products.data.isFeatured);
-          //@ts-ignore
-          this.productForm['created'].setValue(products.data.created);
+          this.productForm['category'].setValue(product.category.id);
+          this.productForm['countInStock'].setValue(product.countInStock);
+          this.productForm['isFeatured'].setValue(product.isFeatured);
+          this.productForm['image'].setValidators([]);
+          this.productForm['image'].updateValueAndValidity();
         })
       }
     })
   }
 
-  private _addProduct(product : Product){
-    this.productsService.createProduct(product).subscribe(response => {
+  private _addProduct(product : FormData){
+    this.productsService.createProduct(product).subscribe(response => { 
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product is created Successfully' });
       timer(2000).toPromise().then(done => {
         this.location.back();
@@ -125,7 +108,7 @@ export class ProductsFormComponent {
     });
   }
 
-  private _updateProduct(productId: string, product : Product){
+  private _updateProduct(productId: string, product : FormData){
     this.productsService.updateProduct(productId, product).subscribe(response => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product is updated Successfully' });
       timer(2000).toPromise().then(done => {
@@ -140,6 +123,21 @@ export class ProductsFormComponent {
     this.categoriesService.getCategories().subscribe(response => {
       this.categories = response
     })
+  }
+
+  onImageUpload(event: any) {
+    const file = event.target.files[0];
+
+    if(file){
+      this.form.patchValue({image : file});
+      this.form.get('image')?.updateValueAndValidity();
+      const reader = new FileReader();
+      reader.onload = () => {
+        //@ts-ignore
+        this.imageDisplay = reader.result;
+      }
+      reader.readAsDataURL(file);
+    }
   }
 
   get productForm() {

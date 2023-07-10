@@ -13,8 +13,8 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ColorPickerModule } from 'primeng/colorpicker';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ButtonModule } from 'primeng/button'
-import { InputTextareaModule } from 'primeng/inputtextarea';;
+import { ButtonModule } from 'primeng/button';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 import { TableModule } from 'primeng/table';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { DropdownModule } from 'primeng/dropdown';
@@ -27,6 +27,8 @@ import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ProductsListComponent } from './pages/products/products-list/products-list.component';
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
+import { UsersListComponent } from './pages/users/users-list/users-list.component';
+import { UsersFormComponent } from './pages/users/users-form/users-form.component';
 
 const routes: Routes = [
   {
@@ -61,6 +63,18 @@ const routes: Routes = [
         path: 'products/form/:id',
         component: ProductsFormComponent,
       },
+      {
+        path: 'users',
+        component: UsersListComponent,
+      },
+      {
+        path: 'users/form',
+        component: UsersFormComponent,
+      },
+      {
+        path: 'users/form/:id',
+        component: UsersFormComponent,
+      },
     ],
   },
 ];
@@ -75,6 +89,8 @@ const routes: Routes = [
     CategoriesFormComponent,
     ProductsListComponent,
     ProductsFormComponent,
+    UsersListComponent,
+    UsersFormComponent,
   ],
   imports: [
     BrowserModule,
