@@ -25,12 +25,15 @@ import { CategoriesService } from '@hikmah-tech/categories';
 import { CategoriesFormComponent } from './pages/categories/categories-form/categories-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { InputMaskModule } from 'primeng/inputmask';
+import { FieldsetModule } from 'primeng/fieldset';
 import { ToastModule } from 'primeng/toast';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ProductsListComponent } from './pages/products/products-list/products-list.component';
 import { ProductsFormComponent } from './pages/products/products-form/products-form.component';
 import { UsersListComponent } from './pages/users/users-list/users-list.component';
 import { UsersFormComponent } from './pages/users/users-form/users-form.component';
+import { OrdersListComponent } from './pages/orders/orders-list/orders-list.component';
+import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 
 const routes: Routes = [
   {
@@ -77,6 +80,14 @@ const routes: Routes = [
         path: 'users/form/:id',
         component: UsersFormComponent,
       },
+      {
+        path: 'orders',
+        component: OrdersListComponent,
+      },
+      {
+        path: 'orders/:id',
+        component:OrdersDetailComponent,
+      },
     ],
   },
 ];
@@ -92,7 +103,9 @@ const routes: Routes = [
     ProductsListComponent,
     ProductsFormComponent,
     UsersListComponent,
-    UsersFormComponent
+    UsersFormComponent,
+    OrdersListComponent,
+    OrdersDetailComponent,
   ],
   imports: [
     BrowserModule,
@@ -115,7 +128,8 @@ const routes: Routes = [
     DropdownModule,
     EditorModule,
     TagModule,
-    InputMaskModule
+    InputMaskModule,
+    FieldsetModule,
   ],
   providers: [CategoriesService, MessageService, ConfirmationService],
   bootstrap: [AppComponent],
