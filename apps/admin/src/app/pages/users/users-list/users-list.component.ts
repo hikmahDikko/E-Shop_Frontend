@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import {UsersService, User } from '@hikmah-tech/users';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
+import { Subject, takeUntil } from 'rxjs';
 
 
 @Component({
@@ -9,8 +10,9 @@ import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/a
   templateUrl: './users-list.component.html',
   styles: [],
 })
-export class UsersListComponent {
+export class UsersListComponent implements OnDestroy{
   users : User[] = [];
+  endSubs$ : Subject<any> = new Subject();
 
   constructor(
     private usersService : UsersService, 
@@ -23,7 +25,7 @@ export class UsersListComponent {
   }
 
   private _getUsers() {
-    this.usersService.getUsers().subscribe((users: User[])  => {
+    this.usersService.getUsers().pipe(takeUntil(this.endSubs$)).subscribe((users: User[])  => {
       this.users = users;
     })
   }
@@ -34,7 +36,7 @@ export class UsersListComponent {
       header: 'Delete User',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.usersService.deleteUser(userId).subscribe(() => {
+        this.usersService.deleteUser(userId).pipe(takeUntil(this.endSubs$)).subscribe(() => {
           this._getUsers();
         },(error) => {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'User cannot be deleted' });
@@ -61,5 +63,9 @@ export class UsersListComponent {
 
   updateUser(userId : string) {
    this.router.navigateByUrl(`users/form/${userId}`)
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.complete();
   }
 }

@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ProductsService } from '@hikmah-tech/products';
 import { Product } from '@hikmah-tech/products';
 import { MessageService } from 'primeng/api';
-import { timer } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 import { CategoriesService, Category } from '@hikmah-tech/categories';
 
 @Component({
@@ -13,13 +13,14 @@ import { CategoriesService, Category } from '@hikmah-tech/categories';
   templateUrl: './products-form.component.html',
   styles: [],
 })
-export class ProductsFormComponent {
+export class ProductsFormComponent implements OnDestroy{
   categories : Category[] = [];
   form!: FormGroup ;
   isSubmitted : boolean = false;
   editMode = false;
   currentProductId : string = "";
   imageDisplay! : string | ArrayBuffer;
+  endSubs$ : Subject<any> = new Subject();
 
   constructor (
     private formBuilder : FormBuilder,
@@ -98,7 +99,7 @@ export class ProductsFormComponent {
   }
 
   private _addProduct(product : FormData){
-    this.productsService.createProduct(product).subscribe(response => { 
+    this.productsService.createProduct(product).pipe(takeUntil(this.endSubs$)).subscribe(response => { 
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product is created Successfully' });
       timer(2000).toPromise().then(done => {
         this.location.back();
@@ -109,7 +110,7 @@ export class ProductsFormComponent {
   }
 
   private _updateProduct(productId: string, product : FormData){
-    this.productsService.updateProduct(productId, product).subscribe(response => {
+    this.productsService.updateProduct(productId, product).pipe(takeUntil(this.endSubs$)).subscribe(response => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Product is updated Successfully' });
       timer(2000).toPromise().then(done => {
         this.location.back();
@@ -120,7 +121,7 @@ export class ProductsFormComponent {
   }
 
   private _getCategories(){
-    this.categoriesService.getCategories().subscribe(response => {
+    this.categoriesService.getCategories().pipe(takeUntil(this.endSubs$)).subscribe(response => {
       this.categories = response
     })
   }
@@ -142,5 +143,9 @@ export class ProductsFormComponent {
 
   get productForm() {
     return this.form.controls;
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.complete();
   }
 }

@@ -1,21 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Order, OrdersService } from '@hikmah-tech/orders';
 import { OrderStatus } from '../order.constants';
 import { MessageService } from 'primeng/api';
 import { Location } from '@angular/common';
-import { timer } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 
 @Component({
   selector: 'admin-orders-detail',
   templateUrl: './orders-detail.component.html',
   styles: [],
 })
-export class OrdersDetailComponent implements OnInit{
+export class OrdersDetailComponent implements OnInit, OnDestroy{
   order! : Order;
   subTotal! : number;
   orderStatuses = [];
   selectedStatus: any;
+  endSubs$ : Subject <any> = new Subject();
 
 
   constructor (
@@ -42,7 +43,7 @@ export class OrdersDetailComponent implements OnInit{
   }
 
   private _getOrder(){
-    this.activatedRoute.params.subscribe(params => {
+    this.activatedRoute.params.pipe(takeUntil(this.endSubs$)).subscribe(params => {
       //@ts-ignore
       if(params.id){
         //@ts-ignore
@@ -58,7 +59,7 @@ export class OrdersDetailComponent implements OnInit{
 
   onStatusChange(event: Event) {
     //@ts-ignore
-    this.ordersService.updateOrder(this.order.id, {status : event.value}).subscribe(response => {
+    this.ordersService.updateOrder(this.order.id, {status : event.value}).pipe(takeUntil(this.endSubs$)).subscribe(response => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Order Status is updated Successfully' });
       timer(2000).toPromise().then(done => {
         this.location.back();
@@ -66,5 +67,9 @@ export class OrdersDetailComponent implements OnInit{
     }, error => {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Order Status is not updated' });
     });
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.complete();
   }
 }

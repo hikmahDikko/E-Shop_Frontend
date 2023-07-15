@@ -15,5 +15,11 @@
 @import '../styles/libs/ui/banner.scss';
 @import '../styles/libs/ui/slider.scss';
 
-//Shared
-@import './apps/admin/shared.scss';
+//Shell
+@import './apps/admin/shell.scss';
+
+//Dashboard
+@import './apps/admin/dashboard.scss';
+
+//Libs
+@import '../styles/libs/users/users.scss'

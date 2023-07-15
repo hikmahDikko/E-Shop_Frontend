@@ -35,8 +35,8 @@
                             <label for="password">E-mail</label><br>
                             <input id="password" type="text" formControlName="email" class="p-inputtext-lg" pInputText><br>
                             <small *ngIf="userForm['email'].invalid && isSubmitted" class="p-error">
-                                <span>E-mail is required</span>
-                                <!-- <span *ngIf="userForm['email'].errors['email']">E-mail is invalid</span> -->
+                                <span *ngIf="userForm['email'].errors?.['required']">E-mail is required</span>
+                                <span *ngIf="userForm['email'].errors?.['email']">E-mail is invalid</span>
                             </small>
                         </div>
                         <div class="field col">

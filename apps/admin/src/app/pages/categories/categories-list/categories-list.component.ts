@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CategoriesService, Category } from '@hikmah-tech/categories';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'admin-categories-list',
   templateUrl: './categories-list.component.html'
 })
-export class CategoriesListComponent implements OnInit {
+export class CategoriesListComponent implements OnInit, OnDestroy {
   categories : Category[] = [];
+  endSubs$ : Subject<any> = new Subject();
 
   constructor(
     private categoryService : CategoriesService, 
@@ -17,11 +19,11 @@ export class CategoriesListComponent implements OnInit {
     private router : Router){}
   
   ngOnInit(): void {
-    this._getCategories()
+    this._getCategories();
   }
 
   private _getCategories() {
-    this.categoryService.getCategories().subscribe(categories => {
+    this.categoryService.getCategories().pipe(takeUntil(this.endSubs$)).subscribe(categories => {
       this.categories = categories;
     })
   }
@@ -32,7 +34,7 @@ export class CategoriesListComponent implements OnInit {
       header: 'Delete Category',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.categoryService.deleteCategory(categoryId).subscribe(response => {
+        this.categoryService.deleteCategory(categoryId).pipe(takeUntil(this.endSubs$)).subscribe(response => {
         },error => {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Category cannot be deleted' });
         });
@@ -55,5 +57,9 @@ export class CategoriesListComponent implements OnInit {
 
   updateCategory(categoryId : string) {
    this.router.navigateByUrl(`categories/form/${categoryId}`)
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.complete();
   }
 }

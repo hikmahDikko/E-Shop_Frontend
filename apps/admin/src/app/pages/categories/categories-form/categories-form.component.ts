@@ -1,20 +1,21 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { CategoriesService, Category } from '@hikmah-tech/categories';
 import { MessageService } from 'primeng/api';
-import { timer } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 
 @Component({
   selector: 'admin-categories-form',
   templateUrl: './categories-form.component.html',
 })
-export class CategoriesFormComponent implements OnInit {
+export class CategoriesFormComponent implements OnInit, OnDestroy{
   form!: FormGroup;
   isSubmitted : boolean = false;
   editMode = false;
   currentCategoryId : string = "";
+  endSubs$ : Subject<any> = new Subject();
 
   constructor (
     private formBuilder : FormBuilder,
@@ -62,7 +63,7 @@ export class CategoriesFormComponent implements OnInit {
       if(params['id']){
         this.editMode = true;
         this.currentCategoryId = params['id'];
-        this.categoriesService.getCategory(params['id']).subscribe(categories => {
+        this.categoriesService.getCategory(params['id']).pipe(takeUntil(this.endSubs$)).subscribe(categories => {
           //@ts-ignore
           this.categoryForm['name'].setValue(categories.data.name);
           //@ts-ignore
@@ -75,7 +76,7 @@ export class CategoriesFormComponent implements OnInit {
   }
 
   private _addCategory(category : Category){
-    this.categoriesService.createCategory(category).subscribe(response => {
+    this.categoriesService.createCategory(category).pipe(takeUntil(this.endSubs$)).subscribe(response => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Category is created Successfully' });
       timer(2000).toPromise().then(done => {
         this.location.back();
@@ -86,7 +87,7 @@ export class CategoriesFormComponent implements OnInit {
   }
 
   private _updateCategory(categoryId: string, category : Category){
-    this.categoriesService.updateCategory(categoryId, category).subscribe(response => {
+    this.categoriesService.updateCategory(categoryId, category).pipe(takeUntil(this.endSubs$)).subscribe(response => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Category is updated Successfully' });
       timer(2000).toPromise().then(done => {
         this.location.back();
@@ -98,5 +99,9 @@ export class CategoriesFormComponent implements OnInit {
 
   get categoryForm() {
     return this.form.controls;
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.complete();
   }
 }

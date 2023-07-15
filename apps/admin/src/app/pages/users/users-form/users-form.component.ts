@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { User, UsersService } from '@hikmah-tech/users';
 import { MessageService } from 'primeng/api';
-import { timer } from 'rxjs';
+import { Subject, takeUntil, timer } from 'rxjs';
 import * as CountryList from 'i18n-iso-countries'
 
 //@ts-ignore
@@ -15,12 +15,13 @@ declare const require;
   templateUrl: './users-form.component.html',
   styles: [],
 })
-export class UsersFormComponent {
+export class UsersFormComponent implements OnDestroy {
   form!: FormGroup;
   isSubmitted : boolean = false;
   editMode = false;
   currentUserId : string = "";
   countries = [];
+  endSubs$ : Subject<any> = new Subject();
 
   constructor (
     private formBuilder : FormBuilder,
@@ -110,7 +111,7 @@ export class UsersFormComponent {
   }
 
   private _adduser(user : User){
-    this.usersService.createUser(user).subscribe(response => {
+    this.usersService.createUser(user).pipe(takeUntil(this.endSubs$)).subscribe(response => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User is created Successfully' });
       timer(2000).toPromise().then(done => {
         this.location.back();
@@ -121,7 +122,7 @@ export class UsersFormComponent {
   }
 
   private _updateuser(userId: string, user : User){
-    this.usersService.updateUser(userId, user).subscribe(response => {
+    this.usersService.updateUser(userId, user).pipe(takeUntil(this.endSubs$)).subscribe(response => {
       this.messageService.add({ severity: 'success', summary: 'Success', detail: 'User is updated Successfully' });
       timer(2000).toPromise().then(done => {
         this.location.back();
@@ -144,5 +145,9 @@ export class UsersFormComponent {
 
   get userForm() {
     return this.form.controls;
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.complete();
   }
 }
