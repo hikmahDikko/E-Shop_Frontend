@@ -7,8 +7,11 @@
 @import '~primeicons/primeicons.css';
 @import '~primeng/resources/themes/saga-blue/theme.css';
 @import '~primeng/resources/primeng.min.css';
-@import '../styles/base/configuration.scss';
 @import '~primeflex/primeflex.css';
+@import '../styles/base/configuration.scss';
+@import '../styles/base/colors.scss';
+@import '~primeflex/primeflex.css';
+@import '~animate.css/animate.css';
 
 //Pages
 @import './apps/eshop/pages/home.scss';
@@ -17,7 +20,17 @@
 //Shared
 @import './apps/eshop/shared/header.scss';
 @import './apps/eshop/shared/footer.scss';
+@import './apps/eshop/shared/eshop-nav.scss';
 
 //Libs
 @import '../styles/libs/ui/banner.scss';
 @import '../styles/libs/ui/slider.scss';
+@import '../styles/libs/products/products-search.scss';
+@import '../styles/libs/categories/categories-banner.scss';
+
+.container{
+    background-color: aliceblue;
+    width: 1200px;
+    padding: 15px;
+    margin: 0 auto;
+}
