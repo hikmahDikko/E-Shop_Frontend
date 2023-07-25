@@ -8,3 +8,4 @@ export * from './lib/components/products-item/products-item.component';
 
 export * from './lib/pages/product-list/product-list.component';
 
+export * from './lib/pages/product-detail/product-detail.component';
