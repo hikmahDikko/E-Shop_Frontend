@@ -8,7 +8,7 @@
             cursor: pointer;
             color: var(--surface-500);
 
-            &:hover{
+            &:hover, &:focus, &:active{
                 color: $primary-color;
             }
         }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Category } from '../../models/categories';
 import { CategoriesService } from '../../services/categories.service';
 import { Subject, takeUntil } from 'rxjs';
@@ -7,7 +7,7 @@ import { Subject, takeUntil } from 'rxjs';
   selector: 'categories-banner',
   templateUrl: './categories-banner.component.html'
 })
-export class CategoriesBannerComponent implements OnInit {
+export class CategoriesBannerComponent implements OnInit, OnDestroy {
   categories: Category[] = [];
   endSubs$ : Subject<any> = new Subject();
 

@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -13,7 +13,7 @@ import { CategoriesService, Category } from '@hikmah-tech/categories';
   templateUrl: './products-form.component.html',
   styles: [],
 })
-export class ProductsFormComponent implements OnDestroy{
+export class ProductsFormComponent implements OnInit, OnDestroy{
   categories : Category[] = [];
   form!: FormGroup ;
   isSubmitted : boolean = false;

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'eshop-product-list',
+  selector: 'product-list',
   templateUrl: './product-list.component.html'
 })
 export class ProductListComponent {}

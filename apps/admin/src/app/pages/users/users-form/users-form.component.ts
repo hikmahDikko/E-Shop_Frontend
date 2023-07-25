@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ declare const require;
   templateUrl: './users-form.component.html',
   styles: [],
 })
-export class UsersFormComponent implements OnDestroy {
+export class UsersFormComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   isSubmitted : boolean = false;
   editMode = false;

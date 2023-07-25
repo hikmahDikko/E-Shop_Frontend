@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {UsersService, User } from '@hikmah-tech/users';
 import { ConfirmEventType, ConfirmationService, MessageService } from 'primeng/api';
@@ -10,7 +10,7 @@ import { Subject, takeUntil } from 'rxjs';
   templateUrl: './users-list.component.html',
   styles: [],
 })
-export class UsersListComponent implements OnDestroy{
+export class UsersListComponent implements OnInit, OnDestroy{
   users : User[] = [];
   endSubs$ : Subject<any> = new Subject();
 
