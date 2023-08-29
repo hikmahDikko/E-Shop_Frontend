@@ -13,6 +13,8 @@ import { NavComponent } from './shared/nav/nav.component';
 import { ProductsModule } from '@hikmah-tech/products';
 import { CategoriesModule } from '@hikmah-tech/categories';
 import { HttpClientModule } from '@angular/common/http';
+import { OrdersModule } from '@hikmah-tech/orders';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -30,9 +32,10 @@ import { HttpClientModule } from '@angular/common/http';
     UiModule,
     AccordionModule,
     ProductsModule,
-    CategoriesModule
+    CategoriesModule,
+    OrdersModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

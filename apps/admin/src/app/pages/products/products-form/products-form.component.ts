@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ProductsService } from '@hikmah-tech/products';
-import { Product } from '@hikmah-tech/products';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil, timer } from 'rxjs';
 import { CategoriesService, Category } from '@hikmah-tech/categories';

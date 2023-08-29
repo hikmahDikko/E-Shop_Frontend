@@ -9,6 +9,7 @@ export class Product {
     images? : string[];
     brand? : string;
     price? :  number;
+    quantity? :  number;
     category? : Category;
     countInStock? : number;
     rating? : number;

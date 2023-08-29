@@ -23,15 +23,15 @@ export class ProductListComponent implements OnInit, OnDestroy{
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
-      params['categoryId'] ? this._getProducts([params['categoryId']]) : this._getProducts();
-      params['categoryId'] ? this.isCategoryPage = true : this.isCategoryPage = false;
+      params['category'] ? this._getProducts([params['category']]) : this._getProducts();
+      params['category'] ? this.isCategoryPage = true : this.isCategoryPage = false;
     })
     this._getCategories();
   }
 
   private _getProducts(categoryId? : string[]){
     this.productsService.getProducts(categoryId).pipe(takeUntil(this.endSubs$)).subscribe(products => {
-      this.products = products
+      this.products = products      
     })
   }
 
@@ -46,7 +46,6 @@ export class ProductListComponent implements OnInit, OnDestroy{
       .filter(category => category.checked)
       .map(category => category.id);
     this._getProducts(selectedCategory);
-
   }
 
   ngOnDestroy(): void {

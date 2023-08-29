@@ -1,7 +1,7 @@
-<div class="featured-products" *ngFor="let product of featuredProducts">
+<div class="featured-products mb-5">
     <h3>Featured Products</h3>
     <div class="grid">
-        <div class="col-3">
+        <div class="col-3" *ngFor="let product of featuredProducts">
             <products-item [product]="product"></products-item>
         </div>
     </div>

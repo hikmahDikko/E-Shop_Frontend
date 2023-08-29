@@ -9,6 +9,10 @@ import { ProductListComponent } from './pages/product-list/product-list.componen
 import { Route, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { RatingModule } from 'primeng/rating';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { UiModule } from '@hikmah-tech/ui';
+import { ToastModule } from 'primeng/toast';
 
 export const route: Route[] = [
   { path: 'products', component: ProductListComponent },
@@ -23,6 +27,10 @@ export const route: Route[] = [
     CheckboxModule,
     RouterModule.forRoot(route),
     FormsModule,
+    RatingModule,
+    InputNumberModule,
+    UiModule,
+    ToastModule
   ],
   declarations: [
     ProductsSearchComponent,

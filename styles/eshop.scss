@@ -26,9 +26,13 @@
 //Libs
 @import '../styles/libs/ui/banner.scss';
 @import '../styles/libs/ui/slider.scss';
+@import '../styles/libs/ui/gallery.scss';
 @import '../styles/libs/products/products-search.scss';
+@import '../styles/libs/products/product-detail.scss';
 @import '../styles/libs/products/product-item.scss';
 @import '../styles/libs/categories/categories-banner.scss';
+@import '../styles/libs/orders/cart-page.scss';
+
 
 .container{
     background-color: aliceblue;
@@ -36,3 +40,4 @@
     padding: 15px;
     margin: 0 auto;
 }
+

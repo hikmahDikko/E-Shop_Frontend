@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'
 import { Observable, map } from 'rxjs';
 import { Order } from '../models/orders';
 import { Environment } from '@env/environment'
+import { Product } from 'libs/products/src/lib/models/products';
 
 const apiUrl = Environment.apiUrl;
 
@@ -45,6 +46,10 @@ export class OrdersService {
       .get<number>(apiUrl + `orders/get/total-sales`)
       .pipe(map((objectValue: any) => objectValue.totalSales
     ));
+  }
+
+  getProduct(productId : string) : Observable<Product>{
+    return this.http.get<Product>(apiUrl + 'products/'+productId);
   }
 
 }
