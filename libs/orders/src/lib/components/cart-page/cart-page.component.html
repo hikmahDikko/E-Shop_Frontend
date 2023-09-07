@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div class="cart-page" *ngIf="cartItemDetails">
     <div class="grid">
         <div class="col-8">
@@ -10,7 +11,7 @@
             </div>
             <div>
                 <h4>
-                    My Cart : {{cartItemDetails.length}} item(s)
+                    My Cart : {{cartCount}} item(s)
                 </h4>
             </div>
             <div class="cart-info mb-5">
@@ -25,13 +26,20 @@
                         <div class="cart-item-name">{{item.product?.name}}</div>
                         <div class="cart-item-price">{{item.product?.price| currency}}</div>
                         <div class="cart-item-remove">
-                            <p-button icon="pi pi-trash" (onClick)="deleteCart()"></p-button>
+                            <p-button icon="pi pi-trash" (onClick)="deleteCart(item)"></p-button>
                         </div>
                     </div>
                     <div class="col-3">
                         <div class="p-field cart-item-quantity">
                             <label for="quantity">Quantity</label><br/>
-                            <p-inputNumber mode="decimal" [showButtons]="true" [inputId]="item.product?.id!" [min]="1" [max]="100"> </p-inputNumber>
+                            <p-inputNumber 
+                                mode="decimal" 
+                                [showButtons]="true" 
+                                [inputId]="item.product?.id!" 
+                                [min]="1" [max]="100" 
+                                [(ngModel)]="item.quantity" 
+                                (onInput)="updateCartItemQuantity($event, item)"
+                            ></p-inputNumber>
                         </div>
                         <div class="cart-item-subtotal">
                             SubTotal :
@@ -42,7 +50,7 @@
             </div>
         </div>
         <div class="col-4">
-            Order Summary
+            <orders-summary></orders-summary>
         </div>
     </div>
 </div>

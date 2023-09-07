@@ -4,7 +4,6 @@ import { CartService } from '@hikmah-tech/orders';
 import { CartItem } from '@hikmah-tech/orders';
 import { Location } from '@angular/common';
 import { MessageService } from 'primeng/api';
-import { timer } from 'rxjs';
 
 @Component({
   selector: 'products-item',
@@ -22,11 +21,9 @@ export class ProductsItemComponent implements OnInit {
     const cartItem : CartItem = {
       product : this.product.id,
       quantity : 1
-
     }
     
-    this.messageService.add({severity:'success', summary:'Success', detail:'Product Successfully Added to Cart'});
-        
     this.cartService.setCartItem(cartItem);
+    this.messageService.add({severity:'success', summary:'Success', detail:'Product Successfully Added to Cart'});
   }
 }

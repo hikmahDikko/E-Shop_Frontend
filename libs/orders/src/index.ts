@@ -8,3 +8,10 @@ export * from './lib/services/cart.service';
 export * from './lib/models/orderItems';
 export * from './lib/components/cart-icon/cart-icon.component';
 export * from './lib/components/cart-page/cart-page.component';
+export * from './lib/components/order-summary/order-summary.component';
+
+export * from './lib/pages/checkout/checkout.component';
+
+export * from './lib/shared/order.constants';
+
+export * from './lib/pages/thankYou/thankYou.component';

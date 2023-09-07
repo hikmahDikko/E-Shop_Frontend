@@ -35,6 +35,8 @@ import { OrdersListComponent } from './pages/orders/orders-list/orders-list.comp
 import { OrdersDetailComponent } from './pages/orders/orders-detail/orders-detail.component';
 import { JwtInterceptor, UsersModule } from '@hikmah-tech/users';
 import { AppRoutingModule } from './app-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 
 
 @NgModule({
@@ -56,6 +58,8 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
     FormsModule,
     ReactiveFormsModule,
     CardModule,

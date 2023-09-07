@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { Cart } from '../models/cart';
 import { CartItem } from '../models/cartItem';
 import { BehaviorSubject, Subject } from 'rxjs';
-import {  Location } from '@angular/common'
-import { MessageService } from 'primeng/api';
 
 export const CART_KEY = 'cart';
 
@@ -13,7 +11,7 @@ export const CART_KEY = 'cart';
 export class CartService {
   //@ts-ignore
   cart$ : BehaviorSubject<Cart> = new BehaviorSubject(this._getCart);
-  constructor( private messageService : MessageService, private location :Location) { }
+  constructor() { }
 
   initialCartStorages() {
     const cart : Cart = this._getCart();
@@ -24,6 +22,8 @@ export class CartService {
   
       const initialCartJSON = JSON.stringify(initialCart);
       localStorage.setItem(CART_KEY, initialCartJSON);
+
+      this.cart$.next(cart);
     }
   }
 
@@ -36,19 +36,19 @@ export class CartService {
     return cart
   }
 
-  // private _setItem() : Cart{
-  //   const cart : Cart = localStorage.setItem(CART_KEY, cartJSON);
-  //   return 
-  // }
 
-  setCartItem(cartItem : CartItem) : Cart{
+  setCartItem(cartItem : CartItem, updateCartItem? : boolean) : Cart{
     const cart = this._getCart();
     const cartItemExist = cart.items.find((item) => item.product === cartItem.product);
 
     if(cartItemExist){
       cart?.items.map((item) : any => {
         if(item.product === cartItem.product){
-          item.quantity = item.quantity + cartItem.quantity;
+          if(updateCartItem){
+            item.quantity = cartItem.quantity;
+          } else {
+            item.quantity = item.quantity + cartItem.quantity;
+          }
           return item;
         }
       })
@@ -57,8 +57,33 @@ export class CartService {
     }
 
     const cartJSON = JSON.stringify(cart);
-    localStorage.setItem("cart", cartJSON);
+    localStorage.setItem(CART_KEY, cartJSON);
+
+    this.cart$.next(cart);
 
     return cart;
+  }
+
+  deleteCartItem(productId : string) {
+    const cart = this._getCart();
+
+    const newCart = cart.items.filter(item => item.product !== productId);
+
+    cart.items = newCart;
+
+    const cartJSON = JSON.stringify(cart);
+    localStorage.setItem(CART_KEY, cartJSON);
+    
+    this.cart$.next(cart);
+   
+  }
+
+  emptyCart() {
+    const intialCart = {
+      items: []
+    };
+    const intialCartJson = JSON.stringify(intialCart);
+    localStorage.setItem(CART_KEY, intialCartJson);
+    this.cart$.next(intialCart);
   }
 }

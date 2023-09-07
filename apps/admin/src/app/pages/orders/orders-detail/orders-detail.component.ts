@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Order, OrdersService } from '@hikmah-tech/orders';
-import { OrderStatus } from '../order.constants';
+import { OrderStatus } from '@hikmah-tech/orders';
 import { MessageService } from 'primeng/api';
 import { Location } from '@angular/common';
 import { Subject, takeUntil, timer } from 'rxjs';
